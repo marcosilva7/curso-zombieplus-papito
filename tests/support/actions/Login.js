@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 
-export class LoginPage {
+export class Login {
     constructor(page) {
         this.page = page;
     }
@@ -16,9 +16,19 @@ export class LoginPage {
         await this.page.click('//button[text()="Entrar"]'); // xpath
         //await page.click('button', { hasText: 'Entrar'});
     }
+
+    async isLogged(){
+        await expect(this.page.locator('.logged-user')).toContainText('Olá');
+    }    
     
     async alertHaveText(target) {
         const alert = this.page.locator('span[class$=alert]');
         await expect(alert).toHaveText(target);
     };   
+
+    async do(email, password){
+        await this.visit();
+        await this.submitLoginForm(email, password);
+        await this.isLogged();
+    }
 }

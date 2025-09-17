@@ -2,7 +2,10 @@
   "name": "zombieplus",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "ui": "npx playwright test --ui"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -10,6 +13,7 @@
   "devDependencies": {
     "@faker-js/faker": "^10.0.0",
     "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.0"
+    "@types/node": "^24.3.0",
+    "pg": "^8.16.3"
   }
 }
