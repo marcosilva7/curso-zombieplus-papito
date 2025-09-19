@@ -44,6 +44,10 @@ export class Movies {
         await this.page.locator('input[name="cover"]')
             .setInputFiles('tests/support/fixtures' + movie.cover)
 
+        if (movie.feature){
+            await this.page.locator('.featured .react-switch').click();
+        }
+
         await this.submit();
     }
 
