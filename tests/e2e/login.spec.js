@@ -10,8 +10,8 @@ test('Realiza tentativa de login com senha inválida', async ({ page }) => {
     await page.login.visit();
     await page.login.submitLoginForm('admin@zombieplus.com', 'senha123');
 
-    const message = 'Oops!Ocorreu um erro ao tentar efetuar o login. Por favor, verifique suas credenciais e tente novamente.';
-    await page.toast.containText(message);
+    const message = 'Ocorreu um erro ao tentar efetuar o login. Por favor, verifique suas credenciais e tente novamente.';
+    await page.popup.haveText(message);
 });
 
 test('Realiza tentativa de login sem preencher o campo e-mail', async ({ page }) => {

@@ -55,4 +55,23 @@ export class Movies {
         await expect(this.page.locator('.alert'))
             .toHaveText(target);
     };
+    
+    async search(text) {
+        await this.page.getByPlaceholder('Busque pelo nome').fill(text);
+        await this.page.click('.actions button[type="submit"]');
+    };
+
+    async tableHave(count) {
+        const rows = this.page.getByRole('row');
+        await expect(rows).toContainText(count);
+    };
+    
+    async remove(title) {
+        // xpath: //td[text()="A Noite dos Mortos-Vivos"]/..//button
+        await this.page.getByRole('row', {name: title})
+            .getByRole('button').click();
+
+        await this.page.click('.confirm-removal')
+    };  
+    
 }

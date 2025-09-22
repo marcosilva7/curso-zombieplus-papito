@@ -1,4 +1,4 @@
-
+import { expect } from '@playwright/test';
 
 export class Api {
     constructor(request) {
@@ -18,20 +18,31 @@ export class Api {
         this.token = body.token;
     }
 
+    async newLead(name, email) {
+        const newLead = await this.request.post('http://localhost:3333/leads', {
+            data: {
+                name: name,
+                email: email
+            }
+        });
+        expect(newLead.ok()).toBeTruthy();
+    }
+
     async postMovie(movie) {
+        await this.setToken();
+
         const response = await this.request.post('http://localhost:3333/movies', {
             headers: {
+                Authorization: `Bearer ${this.token}`,
                 ContentType: 'multipart/form-data',
-                Accept: 'application/json, text/plain, */*',
-                Authorization: `Bearer ${this.token}`
+                Accept: 'application/json, text/plain, */*'
             },
             multipart: {
                 title: movie.title,
                 overview: movie.overview,
-                company_id: movie.company_id,
-                year: movie.year,
-                feature: movie.feature,
-                cover: movie.cover
+                company_id: '3a856563-c987-405c-88e0-b0307472222e',
+                release_year: movie.release_year,
+                featured: movie.featured,
             }
         });
     }

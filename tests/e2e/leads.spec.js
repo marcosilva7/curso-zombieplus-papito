@@ -9,29 +9,23 @@ test('Deve cadastrar um lead na fila de espera', async ({ page }) => {
   await page.leads.openLeadModal();
   await page.leads.submitLeadForm(name, email);
 
-  const message = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!';
-  await page.toast.containText(message);
-
+  const message = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato.';
+  await page.popup.haveText(message);
 });
 
 test('Realiza tentativa de cadastro de lead já existente', async ({ page, request }) => {
   const name = faker.person.fullName();
   const email = faker.internet.email();
 
-  const newLead = await request.post('http://localhost:3333/leads', {
-    data: {
-      name: name,
-      email: email
-    }
-  });
-  expect(newLead.ok()).toBeTruthy();
+  // Cadastra o lead via API para confirmar que já existe na interface
+  await request.api.newLead(name, email);
 
   await page.leads.visit();
   await page.leads.openLeadModal();
   await page.leads.submitLeadForm(name, email);
 
-  const message = 'O endereço de e-mail fornecido já está registrado em nossa fila de espera.';
-  await page.toast.containText(message);
+  const message = 'Verificamos que o endereço de e-mail fornecido já consta em nossa lista de espera. Isso significa que você está um passo mais perto de aproveitar nossos serviços.';
+  await page.popup.haveText(message);
 });
 
 test('Deve realizar tentiva de cadastro com e-mail inválido', async ({ page }) => {
