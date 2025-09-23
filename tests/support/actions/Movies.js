@@ -28,9 +28,7 @@ export class Movies {
         await this.page.fill('#overview', movie.overview);
 
         await this.page.locator('#select_company_id .react-select__indicator').click();
-        // Caso precise debugar o html
-        const html = await this.page.content();
-        console.log(html);
+
         await this.page.locator('.react-select__option')
             .filter({ hasText: movie.company })
             .click();
@@ -42,9 +40,9 @@ export class Movies {
             .click();
 
         await this.page.locator('input[name="cover"]')
-            .setInputFiles('tests/support/fixtures' + movie.cover)
+            .setInputFiles('tests/support/fixtures' + movie.cover);
 
-        if (movie.feature){
+        if (movie.featured){
             await this.page.locator('.featured .react-switch').click();
         }
 

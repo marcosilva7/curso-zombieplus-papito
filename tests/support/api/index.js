@@ -46,4 +46,24 @@ export class Api {
             }
         });
     }
+
+    async postSerie(tvshow) {
+        await this.setToken();
+
+        const response = await this.request.post('http://localhost:3333/tvshows', {
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                ContentType: 'multipart/form-data',
+                Accept: 'application/json, text/plain, */*'
+            },
+            multipart: {
+                title: tvshow.title,
+                overview: tvshow.overview,
+                company_id: '3a856563-c987-405c-88e0-b0307472222e',
+                release_year: tvshow.release_year,
+                seasons: tvshow.season.toString(),
+                featured: tvshow.featured
+            }
+        })
+    }
 }
