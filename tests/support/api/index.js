@@ -1,13 +1,15 @@
+require ('dotenv').config();
 import { expect } from '@playwright/test';
 
 export class Api {
     constructor(request) {
+        this.baseApi = process.env.BASE_API;
         this.request = request;
         this.token = '';
     }
 
     async setToken() {
-        const response = await this.request.post('http://localhost:3333/sessions', {
+        const response = await this.request.post(this.baseApi + '/sessions', {
             data: {
                 email: 'admin@zombieplus.com',
                 password: 'pwd123'
@@ -19,7 +21,7 @@ export class Api {
     }
 
     async newLead(name, email) {
-        const newLead = await this.request.post('http://localhost:3333/leads', {
+        const newLead = await this.request.post(this.baseApi + '/leads', {
             data: {
                 name: name,
                 email: email
@@ -31,7 +33,7 @@ export class Api {
     async postMovie(movie) {
         await this.setToken();
 
-        const response = await this.request.post('http://localhost:3333/movies', {
+        const response = await this.request.post(this.baseApi + '/movies', {
             headers: {
                 Authorization: `Bearer ${this.token}`,
                 ContentType: 'multipart/form-data',
@@ -50,7 +52,7 @@ export class Api {
     async postSerie(tvshow) {
         await this.setToken();
 
-        const response = await this.request.post('http://localhost:3333/tvshows', {
+        const response = await this.request.post(this.baseApi + '/tvshows', {
             headers: {
                 Authorization: `Bearer ${this.token}`,
                 ContentType: 'multipart/form-data',

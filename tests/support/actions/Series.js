@@ -6,7 +6,7 @@ export class Series {
     }
 
     async accessRoute(){
-        await this.page.goto('http://localhost:3000/admin/tvshows');
+        await this.page.goto('/admin/tvshows');
     }
 
     async goForm(){

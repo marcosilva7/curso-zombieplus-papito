@@ -6,7 +6,7 @@ export class Login {
     }
 
     async visit (){
-        await this.page.goto('http://localhost:3000/admin/login');
+        await this.page.goto('/admin/login');
         await expect(this.page.locator('.login-form')).toBeVisible();
     }
 
